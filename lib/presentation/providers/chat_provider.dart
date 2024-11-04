@@ -10,14 +10,14 @@ class ChatProvider extends ChangeNotifier {
   final ScrollController chatScrollcontroller = ScrollController();
 
   //enviar un mensaje
-  Future<void> sendMessage(String) async {
+  Future<void> sendMessage(String text) async {
     // el mensaje va a ser "me" por que yo lo encio
     final newMessage = Message(text: text, fromWho: FromWho.me);
     //agrega un elemento a la alista 'messageList'
     messageList.add(newMessage);
     //notifica si algo de provider cambio para que se guarde en el estado
     notifyListeners();
-    //mueve el scroll
+    //mueve el scroll/dezplazar
     moveScrollBttom();
   }
 
