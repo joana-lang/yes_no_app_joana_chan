@@ -10,7 +10,7 @@ class GetYesNoAnswer {
   Future<Message> getAnswer() async {
     //alamacena la peticion get en una variable
     // ignore: unused_local_variable
-    final response = await _dio.get('https://yesno.wtf/api');
+    final response = await _dio.get("https://yesno.wtf/api");
     throw UnimplementedError();
   }
 }
