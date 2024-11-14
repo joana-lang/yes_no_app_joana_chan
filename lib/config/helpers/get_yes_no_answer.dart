@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:yes_no_app_joana_chan/domain/entities/message.dart';
+//import 'package:yes_no_app_joana_chan/domain/entities/message.dart';
 import 'package:yes_no_app_joana_chan/infraestructure/models/yes_no_model.dart';
 
 class GetYesNoAnswer {

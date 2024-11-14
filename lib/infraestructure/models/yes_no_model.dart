@@ -38,7 +38,19 @@ class YesNoModel {
           : answer == 'no'
               ? 'No'
               : 'Quizas',
-      fromWho: FromWho.hers,
+      fromWho: FromWho.her, //habia him
       //seria el gif
       imageUrl: image);
+}
+
+class Message {
+  final String text;
+  final FromWho fromWho;
+  final String? imageUrl;
+
+  Message({
+    required this.text,
+    required this.fromWho,
+    required this.imageUrl,
+  });
 }

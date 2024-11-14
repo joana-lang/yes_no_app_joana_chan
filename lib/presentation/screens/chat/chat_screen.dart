@@ -5,6 +5,7 @@ import 'package:yes_no_app_joana_chan/presentation/providers/chat_provider.dart'
 import 'package:yes_no_app_joana_chan/presentation/widgets/chat/her_message_bubble.dart';
 import 'package:yes_no_app_joana_chan/presentation/widgets/chat/my_message_bubble.dart';
 import 'package:yes_no_app_joana_chan/presentation/widgets/shared/message_field.box.dart';
+//import 'package:yes_no_app_joana_chan/presentation/widgets/shared/message_field_box.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -16,48 +17,81 @@ class ChatScreen extends StatelessWidget {
         leading: const Padding(
           padding: EdgeInsets.all(3.0),
           child: CircleAvatar(
-            backgroundImage: NetworkImage(
-                'https://i.pinimg.com/736x/cb/1d/a9/cb1da9093b2df216ce2b5fb7e6843c93.jpg'),
+            backgroundImage: AssetImage(
+                'lib/images/bts.GIF'), // Asegúrate que la ruta sea correcta
           ),
-        ), //creando nuevp widget
-        title: const Text('Mi amor'),
-        centerTitle: true, //texto centrado
+        ),
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: AssetImage(
+                  'lib/images/jk.GIF'), // Asegúrate de que la ruta sea correcta
+              radius: 20, // Tamaño del avatar
+            ),
+            const SizedBox(width: 10), // Espacio entre la imagen y el nombre
+            Column(
+              crossAxisAlignment:
+                  CrossAxisAlignment.start, // Alineación a la izquierda
+              children: [
+                const Text(
+                  'JK',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                    height: 4), // Espacio entre el nombre y el subtítulo
+                const Text(
+                  'en línea',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ],
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // Acción de configuración
+            },
+            icon: const Icon(Icons.settings),
+          ),
+        ],
+        centerTitle: true,
       ),
-      body: _ChatView(),
+      body: const _ChatView(),
     );
   }
 }
 
 class _ChatView extends StatelessWidget {
+  const _ChatView({super.key});
+
   @override
   Widget build(BuildContext context) {
-    //pedirle al widget que este pendiente de todos los cambios
-    // ignore: unused_local_variable
+    // Obtener el ChatProvider
     final chatProvider = context.watch<ChatProvider>();
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
             Expanded(
-                child: ListView.builder(
-              itemCount: chatProvider.messageList.length,
-              itemBuilder: (context, index) {
-                // instancia del mensaje que sabra de quien es el mensaje
-                final message = chatProvider.messageList[index];
-                return (message.fromWho == FromWho.him) //ver lo del him o hers
-                    ? HerMessageBubble(
-                        message: message,
-                      )
-                    : MyMessageBubble(
-                        message: message,
-                      );
-              },
-            )),
-            //caja de texto
+              child: ListView.builder(
+                controller: chatProvider.chatScrollcontroller,
+                itemCount: chatProvider.messageList.length,
+                itemBuilder: (context, index) {
+                  final message = chatProvider.messageList[index];
+                  // Determinar si es mensaje de "ella" o "yo"
+                  return (message.fromWho == FromWho.her)
+                      ? HerMessageBubble(message: message)
+                      : MyMessageBubble(message: message);
+                },
+              ),
+            ),
+            // Campo de entrada de mensaje
             MessageFieldBox(
-                //una vez que tenga el valor cambiado envialo
-                onValue: chatProvider.sendMessage),
+              onValue: chatProvider.sendMessage,
+            ),
           ],
         ),
       ),

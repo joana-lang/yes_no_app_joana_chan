@@ -1,7 +1,7 @@
 //identidad atomica_ es lo mas pequeño
 enum FromWho {
   me,
-  him,
+  her, // habia him
   hers,
 }
 
@@ -13,5 +13,8 @@ class Message {
   Message(
       {required this.text,
       required this.fromWho,
-      this.imageUrl}); // de donde viene la imagen
+      this.imageUrl,
+      required timesTamp});
+
+  get timesTamp => null; // de donde viene la imagen
 }

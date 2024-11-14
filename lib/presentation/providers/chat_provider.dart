@@ -4,8 +4,12 @@ import 'package:yes_no_app_joana_chan/domain/entities/message.dart';
 
 class ChatProvider extends ChangeNotifier {
   List<Message> messageList = [
-    Message(text: 'Holaaaa', fromWho: FromWho.me),
-    Message(text: '¿Lloras porque reprobaste tópicos?', fromWho: FromWho.me)
+    Message(text: 'Holaaaa', fromWho: FromWho.me, timesTamp: null),
+    Message(
+      text: '¿Lloras porque reprobaste tópicos?',
+      fromWho: FromWho.me,
+      timesTamp: null,
+    )
   ];
 
   // Variable que controla la posición del scroll
@@ -24,7 +28,8 @@ class ChatProvider extends ChangeNotifier {
     }
 
     // El mensaje va a ser "me" porque yo lo inicio
-    final newMessage = Message(text: text, fromWho: FromWho.me);
+    final newMessage =
+        Message(text: text, fromWho: FromWho.me, timesTamp: null);
 
     // Agrega un elemento a la lista 'messageList'
     messageList.add(newMessage);
@@ -58,14 +63,20 @@ class ChatProvider extends ChangeNotifier {
         curve: Curves.easeOut,
       );
     }
+
+    await Future.delayed(const Duration(seconds: 1));
+    chatScrollcontroller.animateTo(
+        chatScrollcontroller.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut);
   }
 
   Future<void> herReply() async {
     //obtener el pensaje de la peticion
 
-    final herMessage = await getYesNoAnswer.getAnswer();
+    final HerMessage = await getYesNoAnswer.getAnswer();
     // Añadir el mensaje de mi crush a la lista
-    messageList.add(herMessage);
+    messageList.add(HerMessage);
     //Notifica si algo del provider cambio para el estado
     notifyListeners();
     //mueve el scroll hasta el ultimo mensaje recibido
